@@ -7,6 +7,8 @@ add_executable(${PROJECT_NAME}
     "src/main.c"
     "src/bf.h"
     "src/bf.c"
+    "src/stack.h"
+    "src/stack.c"
 )
 
 # Add Warnings
