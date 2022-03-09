@@ -4,7 +4,7 @@ int main(void)
 {
     // FILE *f = fopen("output.bf", "w");
 
-    BF *bf = bf_init(stdout);
+    bf_t *bf = bf_init(stdout);
 
     bf_open_scope(bf);
     {

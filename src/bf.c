@@ -4,8 +4,8 @@
 #include <math.h>
 #include <memory.h>
 
-BF *bf_init(FILE *f) {
-    BF* bf = (BF *)malloc(sizeof(BF));
+bf_t *bf_init(FILE *f) {
+    bf_t* bf = (bf_t *)malloc(sizeof(bf_t));
     bf->output = f;
     bf->stack_ptr = MEMORY_SIZE;
     bf->current_ptr = 0;
@@ -13,19 +13,19 @@ BF *bf_init(FILE *f) {
     return bf;
 }
 
-void bf_terminate(BF *bf) {
+void bf_terminate(bf_t *bf) {
     free(bf);
 }
 
-void bf_write(BF *bf, char c, int n) {
-    char* to_write = (char *)malloc(sizeof(char) * n);
+void bf_write(bf_t *bf, bf_cell_t c, bf_ptr_t n) {
+    bf_cell_t* to_write = (bf_cell_t *)malloc(sizeof(bf_cell_t) * n);
     memset(to_write, c, n);
-    fwrite(to_write, sizeof(char), n, bf->output);
+    fwrite(to_write, sizeof(bf_cell_t), n, bf->output);
     free(to_write);
 }
 
-void bf_shift(BF *bf, int way) {
-    char dir;
+void bf_shift(bf_t *bf, bf_ptr_t way) {
+    bf_cell_t dir;
     if (way == 0)
         return;
     else if (way > 0) 
@@ -38,65 +38,67 @@ void bf_shift(BF *bf, int way) {
     bf->current_ptr+= way;
 }
 
-void bf_clear_value(BF *bf) {
+void bf_clear_value(bf_t *bf) {
     fprintf(bf->output, "[-]");
 }
 
-void bf_move(BF *bf, int target_pos) {
-    int way = target_pos - bf->current_ptr;
+void bf_move(bf_t *bf, bf_ptr_t target_pos) {
+    bf_ptr_t way = target_pos - bf->current_ptr;
     bf_shift(bf, way);
 }
 
-void bf_set_value(BF *bf, char value) {
+void bf_set_value(bf_t *bf, bf_cell_t value) {
     bf_clear_value(bf);
     bf_write(bf, '+', value);
 }
 
-void bf_add_value(BF *bf, char value) {
+void bf_add_value(bf_t *bf, bf_cell_t value) {
     bf_write(bf, '+', value);
 }
 
-void bf_sub_value(BF *bf, char value) {
+void bf_sub_value(bf_t *bf, bf_cell_t value) {
     bf_write(bf, '-', value);
 }
 
-void bf_print_str(BF *bf, int pos, int len) {
+void bf_print_value(bf_t *bf, bf_ptr_t pos) {
     bf_move(bf, pos);
-    for(int i = 0; i < len; i++) {
-        fputc('.', bf->output);
-        bf_shift(bf, 1);
-    }
+    fputc('.', bf->output);
 }
 
-int bf_allocate_stack(BF *bf, int size) {
+void bf_print_str(bf_t *bf, bf_ptr_t pos, bf_ptr_t len) {
+    bf_move(bf, pos);
+    for(bf_ptr_t i = 0; i < len; i++) 
+        bf_print_value(bf, pos + i);
+}
+
+bf_ptr_t bf_allocate_stack(bf_t *bf, bf_ptr_t size) {
     bf->stack_ptr -= size;
-    int scope_size = pop(&bf->stack);
+    bf_ptr_t scope_size = pop(&bf->stack);
     push(&bf->stack, scope_size + size);
     return bf->stack_ptr;
 }
 
-void bf_open_scope(BF *bf) {
+void bf_open_scope(bf_t *bf) {
     push(&bf->stack, 0);
 }
 
-void bf_close_scope(BF *bf) {
-    int scope_size = pop(&bf->stack);
+void bf_close_scope(bf_t *bf) {
+    bf_ptr_t scope_size = pop(&bf->stack);
     bf->stack_ptr += scope_size;
 }
 
-int bf_create_buffer(BF *bf, char info) {
-    int pos = bf_allocate_stack(bf, 1);
+bf_ptr_t bf_create_buffer(bf_t *bf, bf_cell_t info) {
+    bf_ptr_t pos = bf_allocate_stack(bf, 1);
     bf_move(bf, pos);
     bf_set_value(bf, info);
     return pos;
 }
 
-int bf_create_buffer_str(BF *bf, char* str, int len) {
-    int pos = bf_allocate_stack(bf, len);
-    for (int i = len - 1; i >= 0; i--) {
+bf_ptr_t bf_create_buffer_str(bf_t *bf, bf_cell_t* str, bf_ptr_t len) {
+    bf_ptr_t pos = bf_allocate_stack(bf, len);
+    for (bf_ptr_t i = len - 1; i >= 0; i--) {
         bf_move(bf, pos + i);
         bf_set_value(bf, str[i]);
     }
     return pos;
 }
-
