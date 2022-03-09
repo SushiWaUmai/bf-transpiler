@@ -16,7 +16,7 @@ void bf_terminate(BF *bf) {
     free(bf);
 }
 
-void bf_write(BF *bf, char c, char n) {
+void bf_write(BF *bf, char c, int n) {
     char* to_write = (char *)malloc(sizeof(char) * n);
     memset(to_write, c, n);
     fwrite(to_write, sizeof(char), n, bf->output);

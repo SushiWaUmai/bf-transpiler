@@ -7,9 +7,11 @@ int main(void) {
 
     int pos = bf_create_buffer_str(bf, "Hello, World!\n", 14);
     int test = bf_create_buffer_str(bf, "This is a test", 14);
+    int test2 = bf_create_buffer_str(bf, "This is another test\n", 21);
 
     bf_print_str(bf, pos, 14);
     bf_print_str(bf, test, 14);
+    bf_print_str(bf, test2, 21);
 
     bf_terminate(bf);
     fclose(f);

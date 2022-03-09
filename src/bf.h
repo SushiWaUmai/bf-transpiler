@@ -14,7 +14,7 @@ typedef struct {
 BF*     bf_init(FILE *output);
 void    bf_terminate(BF *bf);
 
-void    bf_write(BF *bf, char c, char n);
+void    bf_write(BF *bf, char c, int n);
 void    bf_shift(BF *bf, int way);
 void    bf_move(BF *bf, int target_pos);
 
