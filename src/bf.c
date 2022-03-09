@@ -60,7 +60,7 @@ void bf_sub_value(bf_t *bf, bf_cell_t value) {
     bf_write(bf, '-', value);
 }
 
-void bf_print_value(bf_t *bf, bf_ptr_t pos) {
+void bf_print_ascii(bf_t *bf, bf_ptr_t pos) {
     bf_move(bf, pos);
     fputc('.', bf->output);
 }
@@ -68,7 +68,7 @@ void bf_print_value(bf_t *bf, bf_ptr_t pos) {
 void bf_print_str(bf_t *bf, bf_ptr_t pos, bf_ptr_t len) {
     bf_move(bf, pos);
     for(bf_ptr_t i = 0; i < len; i++) 
-        bf_print_value(bf, pos + i);
+        bf_print_ascii(bf, pos + i);
 }
 
 bf_ptr_t bf_allocate_stack(bf_t *bf, bf_ptr_t size) {

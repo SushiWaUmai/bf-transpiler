@@ -28,7 +28,7 @@ void        bf_set_value(bf_t *bf, bf_cell_t value);
 void        bf_add_value(bf_t *bf, bf_cell_t value);
 void        bf_sub_value(bf_t *bf, bf_cell_t value);
 
-void        bf_print_value(bf_t *bf, bf_ptr_t pos);
+void        bf_print_ascii(bf_t *bf, bf_ptr_t pos);
 void        bf_print_str(bf_t *bf, bf_ptr_t pos, bf_ptr_t len);
 
 bf_ptr_t    bf_allocate_stack(bf_t *bf, bf_ptr_t size);
