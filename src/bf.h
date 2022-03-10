@@ -13,6 +13,7 @@ typedef struct {
     FILE *output;
     bf_ptr_t current_ptr;
     bf_ptr_t stack_ptr;
+    bf_cell_t memory[MEMORY_SIZE];
     StackNode *stack;
 } bf_t;
 
@@ -24,6 +25,7 @@ void        bf_shift(bf_t *bf, bf_ptr_t way);
 void        bf_move(bf_t *bf, bf_ptr_t target_pos);
 void        bf_clear_value(bf_t *bf);
 
+void        bf_update_memory(bf_t *bf, bf_cell_t value);
 void        bf_set_value(bf_t *bf, bf_cell_t value);
 void        bf_add_value(bf_t *bf, bf_cell_t value);
 void        bf_sub_value(bf_t *bf, bf_cell_t value);
