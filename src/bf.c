@@ -64,6 +64,11 @@ void bf_clear_value(bf_t *bf, bf_ptr_t target)
     fprintf(bf->output, "[-]");
 }
 
+bf_cell_t bf_read_memory(bf_t *bf, bf_ptr_t target)
+{
+    return bf->memory[target];
+}
+
 // Update the memory simuation on the current pointer
 // value - value to update the memory with
 void bf_update_memory(bf_t *bf, bf_cell_t value, bf_ptr_t target)
@@ -82,9 +87,9 @@ void bf_set_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 // Copy the value at src to dst
 // src - source position
 // dst - destination position
-void bf_cpy_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst) 
+void bf_cpy_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst)
 {
-    bf_set_value(bf, bf->memory[src], dst);
+    bf_set_value(bf, bf_read_memory(bf, src), dst);
 }
 
 // Copy the buffer at src to dst
@@ -130,6 +135,22 @@ void bf_print_digit(bf_t *bf, bf_ptr_t pos)
     bf_add_value(bf, '0', pos);
     bf_print_ascii(bf, bf->current_ptr);
     bf_sub_value(bf, '0', pos);
+}
+
+// Print a digit value of the value at the current pointer
+// pos - position to print the digit value of
+void bf_print_number(bf_t *bf, bf_ptr_t pos)
+{
+    bf_open_scope(bf);
+    bf_cell_t num = bf_read_memory(bf, pos);
+
+    static char num_str[INT_ENOUGH];
+    sprintf(num_str, "%d", num);
+
+    bf_ptr_t str_ptr = bf_create_buffer(bf, num_str, INT_ENOUGH);
+    bf_print_buffer(bf, str_ptr, INT_ENOUGH);
+
+    bf_close_scope(bf);
 }
 
 // Print a buffer in ascii to the output stream

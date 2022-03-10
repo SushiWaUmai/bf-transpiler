@@ -2,6 +2,7 @@
 #define BF_H_
 
 #define MEMORY_SIZE 30000
+#define INT_ENOUGH 10
 
 #include <stdio.h>
 #include "./stack.h"
@@ -34,6 +35,7 @@ void        bf_sub_value(bf_t *bf, bf_cell_t value, bf_ptr_t target);
 
 void        bf_print_ascii(bf_t *bf, bf_ptr_t pos);
 void        bf_print_buffer(bf_t *bf, bf_ptr_t pos, bf_ptr_t len);
+void        bf_print_number(bf_t *bf, bf_ptr_t pos);
 
 bf_ptr_t    bf_allocate_stack(bf_t *bf, bf_ptr_t size);
 bf_ptr_t    bf_create_buffer(bf_t *bf, bf_cell_t* str, bf_ptr_t len);
