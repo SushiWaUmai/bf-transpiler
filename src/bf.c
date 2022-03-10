@@ -35,7 +35,7 @@ void bf_write(bf_t *bf, bf_cell_t c, bf_ptr_t n)
 }
 
 // Shift the current pointer by a given amount
-void bf_shift(bf_t *bf, bf_ptr_t way)
+void bf_shift_ptr(bf_t *bf, bf_ptr_t way)
 {
     bf_cell_t dir;
     if (way == 0)
@@ -51,16 +51,16 @@ void bf_shift(bf_t *bf, bf_ptr_t way)
 }
 
 // Move the current pointer to a given position
-void bf_move(bf_t *bf, bf_ptr_t target_pos)
+void bf_move_ptr(bf_t *bf, bf_ptr_t target_pos)
 {
     bf_ptr_t way = target_pos - bf->current_ptr;
-    bf_shift(bf, way);
+    bf_shift_ptr(bf, way);
 }
 
 // Clear the value at the current pointer
 void bf_clear_value(bf_t *bf, bf_ptr_t target)
 {
-    bf_move(bf, target);
+    bf_move_ptr(bf, target);
     fprintf(bf->output, "[-]");
 }
 
@@ -76,16 +76,32 @@ void bf_update_memory(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 void bf_set_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 {
     bf_clear_value(bf, target);
-    bf_move(bf, target);
-    bf_write(bf, '+', value);
-    bf_update_memory(bf, value, target);
+    bf_add_value(bf, value, target);
+}
+
+// Copy the value at src to dst
+// src - source position
+// dst - destination position
+void bf_cpy_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst) 
+{
+    bf_set_value(bf, bf->memory[src], dst);
+}
+
+// Copy the buffer at src to dst
+// src - source position
+// dst - destination position
+// len - length of the buffer
+void bf_cpy_buffer(bf_t *bf, bf_ptr_t src, bf_ptr_t dst, bf_ptr_t len)
+{
+    for (bf_ptr_t i = 0; i < len; i++)
+        bf_cpy_value(bf, src + i, dst + i);
 }
 
 // Add a value to the value at the current pointer
 // value - value to add to the memory
 void bf_add_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 {
-    bf_move(bf, target);
+    bf_move_ptr(bf, target);
     bf_write(bf, '+', value);
     bf_update_memory(bf, value, target);
 }
@@ -94,7 +110,7 @@ void bf_add_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 // value - value to subtract from the memory
 void bf_sub_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 {
-    bf_move(bf, target);
+    bf_move_ptr(bf, target);
     bf_write(bf, '-', value);
     bf_update_memory(bf, value, target);
 }
@@ -103,7 +119,7 @@ void bf_sub_value(bf_t *bf, bf_cell_t value, bf_ptr_t target)
 // pos - position to print the ASCII value of
 void bf_print_ascii(bf_t *bf, bf_ptr_t pos)
 {
-    bf_move(bf, pos);
+    bf_move_ptr(bf, pos);
     fputc('.', bf->output);
 }
 
@@ -116,12 +132,12 @@ void bf_print_digit(bf_t *bf, bf_ptr_t pos)
     bf_sub_value(bf, '0', pos);
 }
 
-// Print a string to the output stream
+// Print a buffer in ascii to the output stream
 // str - string to print
 // len - length of the string
-void bf_print_str(bf_t *bf, bf_ptr_t pos, bf_ptr_t len)
+void bf_print_buffer(bf_t *bf, bf_ptr_t pos, bf_ptr_t len)
 {
-    bf_move(bf, pos);
+    bf_move_ptr(bf, pos);
     for (bf_ptr_t i = 0; i < len; i++)
         bf_print_ascii(bf, pos + i);
 }
@@ -149,18 +165,9 @@ void bf_close_scope(bf_t *bf)
     bf->stack_ptr += scope_size;
 }
 
-// Allocate 1 byte of memory on the stack and populate it info
-// info - info to populate the memory with
-bf_ptr_t bf_create_buffer(bf_t *bf, bf_cell_t info)
-{
-    bf_ptr_t pos = bf_allocate_stack(bf, 1);
-    bf_set_value(bf, info, pos);
-    return pos;
-}
-
 // Create an array on the stack
 // str - array to create
-bf_ptr_t bf_create_buffer_str(bf_t *bf, bf_cell_t *str, bf_ptr_t len)
+bf_ptr_t bf_create_buffer(bf_t *bf, bf_cell_t *str, bf_ptr_t len)
 {
     bf_ptr_t pos = bf_allocate_stack(bf, len);
     for (bf_ptr_t i = len - 1; i >= 0; i--)
