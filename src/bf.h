@@ -1,11 +1,14 @@
 #ifndef BF_H_
 #define BF_H_
 
-#define MEMORY_SIZE 30000
-#define INT_ENOUGH 10
-
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <memory.h>
 #include "./stack.h"
+
+#define MEMORY_SIZE 30000
+#define INT_ENOUGH ((CHAR_BIT*sizeof(int)-1)*10/33+3)
 
 typedef char bf_cell_t;
 typedef int bf_ptr_t;

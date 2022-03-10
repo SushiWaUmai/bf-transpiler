@@ -1,9 +1,5 @@
 #include "./bf.h"
 
-#include <stdlib.h>
-#include <math.h>
-#include <memory.h>
-
 // Initialize a brainfuck transpiler
 // f - output stream
 bf_t *bf_init(FILE *f)
