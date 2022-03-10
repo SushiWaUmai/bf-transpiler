@@ -22,13 +22,13 @@ void        bf_terminate(bf_t *bf);
 
 void        bf_write(bf_t *bf, bf_cell_t c, bf_ptr_t n);
 void        bf_shift(bf_t *bf, bf_ptr_t way);
-void        bf_move(bf_t *bf, bf_ptr_t target_pos);
-void        bf_clear_value(bf_t *bf);
+void        bf_move(bf_t *bf, bf_ptr_t target);
+void        bf_clear_value(bf_t *b, bf_ptr_t target);
 
-void        bf_update_memory(bf_t *bf, bf_cell_t value);
-void        bf_set_value(bf_t *bf, bf_cell_t value);
-void        bf_add_value(bf_t *bf, bf_cell_t value);
-void        bf_sub_value(bf_t *bf, bf_cell_t value);
+void        bf_update_memory(bf_t *bf, bf_cell_t value, bf_ptr_t target);
+void        bf_set_value(bf_t *bf, bf_cell_t value, bf_ptr_t target);
+void        bf_add_value(bf_t *bf, bf_cell_t value, bf_ptr_t target);
+void        bf_sub_value(bf_t *bf, bf_cell_t value, bf_ptr_t target);
 
 void        bf_print_ascii(bf_t *bf, bf_ptr_t pos);
 void        bf_print_str(bf_t *bf, bf_ptr_t pos, bf_ptr_t len);
@@ -39,5 +39,7 @@ bf_ptr_t    bf_create_buffer_str(bf_t *bf, bf_cell_t* str, bf_ptr_t len);
 
 void        bf_open_scope(bf_t *f);
 void        bf_close_scope(bf_t *f);
+
+void        bf_output_simulated_memory(bf_t *bf, FILE *output);
 
 #endif // BF_H_

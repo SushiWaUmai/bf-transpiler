@@ -2,7 +2,6 @@
 
 int main(void)
 {
-    // FILE *f = fopen("output.bf", "w");
 
     bf_t *bf = bf_init(stdout);
 
@@ -13,7 +12,7 @@ int main(void)
             bf_ptr_t test   = bf_create_buffer_str(bf, "This is a test\n", 15);
             bf_print_str(bf, test,  15);
         }
-        
+
         bf_close_scope(bf);
         bf_ptr_t pos    = bf_create_buffer_str(bf, "Hello, World!\n", 14);
         bf_ptr_t test2  = bf_create_buffer_str(bf, "This is another test\n", 21);
@@ -31,6 +30,10 @@ int main(void)
     }
     bf_close_scope(bf);
 
+    FILE *f = fopen("output.bin", "wb");
+    bf_output_simulated_memory(bf, f);
+    fclose(f);
+
+
     bf_terminate(bf);
-    // fclose(f);
 }
