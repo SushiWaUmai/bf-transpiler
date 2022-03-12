@@ -10,7 +10,7 @@ int main(void)
         bf_open_scope(bf);
         {
             bf_ptr_t test = bf_create_buffer(bf, "This is a test\n", 15);
-            bf_print_buffer(bf, test, 15);
+            bf_print_ascii_buffer_l(bf, test, 15);
         }
 
         bf_close_scope(bf);
@@ -19,22 +19,25 @@ int main(void)
         bf_ptr_t test3 = bf_allocate_stack(bf, 14);
         bf_cpy_buffer(bf, pos, test3, 14);
 
-        bf_print_buffer(bf, pos, 14);
-        bf_print_buffer(bf, test2, 21);
-        bf_print_buffer(bf, test3, 14);
+        bf_print_ascii_buffer_l(bf, pos, 14);
+        bf_print_ascii_buffer_l(bf, test2, 21);
+        bf_print_ascii_buffer_l(bf, test3, 14);
     }
     bf_close_scope(bf);
 
     bf_open_scope(bf);
     {
-        bf_ptr_t pos = bf_create_buffer(bf, "yesyesyesyesyes\n", 16);
+        bf_ptr_t num_ptr_1 = bf_create_value(bf, 6);
+        bf_ptr_t op = bf_create_buffer(bf, " + ", 3);
+        bf_ptr_t num_ptr_2 = bf_create_value(bf, 3);
+        bf_ptr_t equal = bf_create_buffer(bf, " = ", 3);
+        bf_ptr_t result = bf_add_values(bf, num_ptr_1, num_ptr_2);
 
-        bf_print_buffer(bf, pos, 16);
-
-        // char val = 10;
-        // bf_ptr_t num_ptr = bf_create_buffer(bf, &val, 1);
-
-        // bf_print_number(bf, num_ptr);
+        bf_print_digit_l(bf, num_ptr_1);
+        bf_print_ascii_buffer_l(bf, op, 3);
+        bf_print_digit_l(bf, num_ptr_2);
+        bf_print_ascii_buffer_l(bf, equal, 3);
+        bf_print_digit_l(bf, result);
     }
     bf_close_scope(bf);
 

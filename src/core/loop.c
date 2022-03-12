@@ -15,9 +15,9 @@ void bf_stop_loop(bf_t *bf)
 bf_ptr_t bf_start_for_loop_r(bf_t *bf, bf_cell_t iterations)
 {
     bf_open_scope(bf);
-    bf_start_loop(bf);
     bf_ptr_t i = bf_create_value(bf, iterations);
     bf_move_ptr(bf, i);
+    bf_start_loop(bf);
 
     return i;
 }
@@ -25,10 +25,10 @@ bf_ptr_t bf_start_for_loop_r(bf_t *bf, bf_cell_t iterations)
 bf_ptr_t bf_start_for_loop_l(bf_t *bf, bf_ptr_t iterator)
 {
     bf_open_scope(bf);
-    bf_start_loop(bf);
     bf_ptr_t i = bf_allocate_stack(bf, 1);
     bf_cpy_value(bf, iterator, i);
     bf_move_ptr(bf, i);
+    bf_start_loop(bf);
 
     return i;
 }

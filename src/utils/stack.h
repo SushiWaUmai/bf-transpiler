@@ -5,19 +5,20 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "../core/type.h"
 
-typedef struct StackNode StackNode;
+typedef struct bf_stacknode_t bf_stacknode_t;
 
 // A structure to represent a stack
-struct StackNode {
-	int data;
-	StackNode* next;
+struct bf_stacknode_t {
+	bf_ptr_t data;
+	bf_stacknode_t* next;
 };
 
-StackNode* new_node(int data);
-int is_empty(StackNode* root);
-void push(StackNode** root, int data);
-int pop(StackNode** root);
-int peek(StackNode* root);
+bf_stacknode_t* bf_stack_new_node(bf_ptr_t data);
+bf_ptr_t bf_stack_is_empty(bf_stacknode_t* root);
+void bf_stack_push(bf_stacknode_t** root, bf_ptr_t data);
+bf_ptr_t bf_stack_pop(bf_stacknode_t** root);
+bf_ptr_t bf_stack_peek(bf_stacknode_t* root);
 
 #endif //  STACK_H_

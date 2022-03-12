@@ -42,8 +42,8 @@ void bf_move_ptr(bf_t *bf, bf_ptr_t target_pos)
 bf_ptr_t bf_allocate_stack(bf_t *bf, bf_ptr_t size)
 {
     bf->stack_ptr -= size;
-    bf_ptr_t scope_size = pop(&bf->stack);
-    push(&bf->stack, scope_size + size);
+    bf_ptr_t scope_size = bf_stack_pop(&bf->stack);
+    bf_stack_push(&bf->stack, scope_size + size);
     return bf->stack_ptr;
 }
 
@@ -69,12 +69,12 @@ bf_ptr_t bf_create_value(bf_t *bf, bf_cell_t value)
 // Open a scope on the stack
 void bf_open_scope(bf_t *bf)
 {
-    push(&bf->stack, 0);
+    bf_stack_push(&bf->stack, 0);
 }
 
 // Close a scope on the stack and deallocate scope
 void bf_close_scope(bf_t *bf)
 {
-    bf_ptr_t scope_size = pop(&bf->stack);
+    bf_ptr_t scope_size = bf_stack_pop(&bf->stack);
     bf->stack_ptr += scope_size;
 }

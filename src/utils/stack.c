@@ -1,40 +1,40 @@
 #include "./stack.h"
 
-StackNode *new_node(int data)
+bf_stacknode_t *bf_stack_new_node(bf_ptr_t data)
 {
-    StackNode *stackNode = (StackNode *)malloc(sizeof(StackNode));
+    bf_stacknode_t *stackNode = (bf_stacknode_t *)malloc(sizeof(bf_stacknode_t));
     stackNode->data = data;
     stackNode->next = NULL;
     return stackNode;
 }
 
-int is_empty(StackNode *root)
+bf_ptr_t bf_stack_is_empty(bf_stacknode_t *root)
 {
     return !root;
 }
 
-void push(StackNode **root, int data)
+void bf_stack_push(bf_stacknode_t **root, bf_ptr_t data)
 {
-    StackNode *stackNode = new_node(data);
+    bf_stacknode_t *stackNode = bf_stack_new_node(data);
     stackNode->next = *root;
     *root = stackNode;
 }
 
-int pop(StackNode **root)
+bf_ptr_t bf_stack_pop(bf_stacknode_t **root)
 {
-    if (is_empty(*root))
+    if (bf_stack_is_empty(*root))
         return INT_MIN;
-    StackNode *temp = *root;
+    bf_stacknode_t *temp = *root;
     *root = (*root)->next;
-    int popped = temp->data;
+    bf_ptr_t popped = temp->data;
     free(temp);
 
     return popped;
 }
 
-int peek(StackNode *root)
+bf_ptr_t bf_stack_peek(bf_stacknode_t *root)
 {
-    if (is_empty(root))
+    if (bf_stack_is_empty(root))
         return INT_MIN;
     return root->data;
 }

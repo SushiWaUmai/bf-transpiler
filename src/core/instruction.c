@@ -3,6 +3,7 @@
 #include "./loop.h"
 
 // Clear the value at the current pointer
+// The same as bf_set_value(bf, 0, target)
 void bf_clear_value(bf_t *bf, bf_ptr_t target)
 {
     bf_move_ptr(bf, target);
@@ -40,8 +41,8 @@ void bf_cpy_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst)
     bf_open_scope(bf);
     {
         bf_ptr_t tmp = bf_allocate_stack(bf, 1);
-        bf_set_value(bf, 0, tmp);
-        bf_set_value(bf, 0, dst);
+        bf_clear_value(bf, tmp);
+        bf_clear_value(bf, dst);
 
         bf_move_ptr(bf, src);
         bf_start_loop(bf);
@@ -67,17 +68,6 @@ void bf_cpy_buffer(bf_t *bf, bf_ptr_t src, bf_ptr_t dst, bf_ptr_t len)
 {
     for (bf_ptr_t i = 0; i < len; i++)
         bf_cpy_value(bf, src + i, dst + i);
-    // bf_open_scope(bf);
-    // {
-    //     bf_ptr_t i = bf_create_value(bf, 0);
-
-    //     bf_move_ptr(bf, i);
-    //     bf_start_loop(bf);
-
-    //     bf_sub_value(bf, 1, i);
-    //     bf_stop_loop(bf);
-    // }
-    // bf_close_scope(bf);
 }
 
 // Add a value to the value at the current pointer
@@ -88,21 +78,24 @@ void bf_add_value_r(bf_t *bf, bf_cell_t value, bf_ptr_t target)
     bf_write(bf, '+', value);
 }
 
-void bf_add_values(bf_t *bf, bf_ptr_t a, bf_ptr_t b, bf_ptr_t target)
+bf_ptr_t bf_add_values(bf_t *bf, bf_ptr_t a, bf_ptr_t b)
 {
+    bf_ptr_t target = bf_allocate_stack(bf, 1);
+    bf_clear_value(bf, target);
+
     {
-        bf_move_ptr(bf, a);
         bf_ptr_t iterator = bf_start_for_loop_l(bf, a);
         bf_add_value_r(bf, 1, target);
         bf_stop_for_loop(bf, iterator);
     }
 
     {
-        bf_move_ptr(bf, b);
         bf_ptr_t iterator = bf_start_for_loop_l(bf, b);
         bf_add_value_r(bf, 1, target);
         bf_stop_for_loop(bf, iterator);
     }
+
+    return target;
 }
 
 // Subtract a value from the value at the current pointer

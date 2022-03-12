@@ -6,7 +6,7 @@ project("bf-transpiler")
 add_executable(${PROJECT_NAME}
     "src/main.c"
     "src/bf.h"
-    "src/bf.c"
+    "src/core/type.h"
     "src/core/core.h"
     "src/core/core.c"
     "src/core/loop.h"
@@ -15,6 +15,8 @@ add_executable(${PROJECT_NAME}
     "src/core/memory.c"
     "src/core/instruction.h"
     "src/core/instruction.c"
+    "src/core/print.h"
+    "src/core/print.c"
     "src/utils/stack.h"
     "src/utils/stack.c"
 )
