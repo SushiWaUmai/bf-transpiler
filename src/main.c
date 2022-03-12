@@ -2,7 +2,10 @@
 
 int main(void)
 {
+    // Create the output stream
     FILE *bf_output = fopen("output.bf", "w");
+    
+    // Initialize the brainf**k transpiler
     bf_t *bf = bf_init(bf_output);
 
     bf_open_scope(bf);
