@@ -7,8 +7,16 @@ add_executable(${PROJECT_NAME}
     "src/main.c"
     "src/bf.h"
     "src/bf.c"
-    "src/stack.h"
-    "src/stack.c"
+    "src/core/core.h"
+    "src/core/core.c"
+    "src/core/loop.h"
+    "src/core/loop.c"
+    "src/core/memory.h"
+    "src/core/memory.c"
+    "src/core/instruction.h"
+    "src/core/instruction.c"
+    "src/utils/stack.h"
+    "src/utils/stack.c"
 )
 
 # Add Warnings
