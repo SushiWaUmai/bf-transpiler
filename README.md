@@ -1,15 +1,15 @@
 # Brainf**k Transpiler
 
-Simple brainfuck transpiler written in C.
+Simple brainf**k transpiler written in C.
 
 ## Getting Started
 Clone the repo
-```
+```bash
 git clone https://github.com/SushiWaUmai/bf-transpiler.git
 ```
 
 Generate the project using CMake
-```
+```bash
 mkdir build && cd build
 cmake ..
 ```
