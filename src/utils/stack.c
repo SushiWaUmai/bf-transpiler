@@ -23,7 +23,7 @@ void bf_stack_push(bf_stacknode_t **root, bf_ptr_t data)
 bf_ptr_t bf_stack_pop(bf_stacknode_t **root)
 {
     if (bf_stack_is_empty(*root))
-        return INT_MIN;
+        return -1;
     bf_stacknode_t *temp = *root;
     *root = (*root)->next;
     bf_ptr_t popped = temp->data;
@@ -35,6 +35,6 @@ bf_ptr_t bf_stack_pop(bf_stacknode_t **root)
 bf_ptr_t bf_stack_peek(bf_stacknode_t *root)
 {
     if (bf_stack_is_empty(root))
-        return INT_MIN;
+        return -1;
     return root->data;
 }

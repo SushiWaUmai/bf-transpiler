@@ -2,6 +2,7 @@
 #include "./instruction.h"
 #include "./loop.h"
 
+#include <assert.h>
 #include <string.h>
 
 // Write multiple characters to the output stream
@@ -86,6 +87,11 @@ void bf_cpy_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst)
 // len - length of the buffer
 void bf_cpy_buffer(bf_t *bf, bf_ptr_t src, bf_ptr_t dst, bf_ptr_t len)
 {
+    // bf_ptr_t i = bf_start_for_loop_r(bf, len);
+    // {
+    //     bf_cpy_value(bf, src, dst);
+    // }
+    // bf_stop_for_loop(bf, i);
     for (bf_ptr_t i = 0; i < len; i++)
         bf_cpy_value(bf, src + i, dst + i);
 }
@@ -107,7 +113,7 @@ bf_ptr_t bf_create_buffer(bf_t *bf, bf_cell_t *str, bf_ptr_t len)
     bf_ptr_t pos = bf_allocate_stack(bf, len);
     for (bf_ptr_t i = len - 1; i >= 0; i--)
     {
-        bf_set_value(bf, str[i], pos + i);
+        bf_set_value(bf, str[(int)i], pos + i);
     }
     return pos;
 }
