@@ -7,4 +7,4 @@
 typedef char bf_cell_t;
 typedef int bf_ptr_t;
 
-#endif BF_TYPE_H_
+#endif // BF_TYPE_H_
