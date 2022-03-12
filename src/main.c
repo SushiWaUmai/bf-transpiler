@@ -47,3 +47,4 @@ int main(void)
     fclose(bf_output);
     bf_terminate(bf);
 }
+

@@ -13,3 +13,4 @@ bf_ptr_t    bf_add_values(bf_t *bf, bf_ptr_t a, bf_ptr_t b);
 void        bf_sub_value_r(bf_t *bf, bf_cell_t value, bf_ptr_t target);
 
 #endif //  BF_INSTRUCTION_H_
+

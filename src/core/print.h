@@ -8,3 +8,4 @@ void        bf_print_ascii_buffer_l(bf_t *bf, bf_ptr_t pos, bf_ptr_t len);
 void        bf_print_digit_l(bf_t *bf, bf_ptr_t pos);
 
 #endif // BF_PRINT_H_
+

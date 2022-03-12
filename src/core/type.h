@@ -8,3 +8,4 @@ typedef char bf_cell_t;
 typedef char bf_ptr_t;
 
 #endif // BF_TYPE_H_
+

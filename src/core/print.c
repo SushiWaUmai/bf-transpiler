@@ -28,3 +28,4 @@ void bf_print_ascii_buffer_l(bf_t *bf, bf_ptr_t pos, bf_ptr_t len)
     for (bf_ptr_t i = 0; i < len; i++)
         bf_print_ascii_l(bf, pos + i);
 }
+

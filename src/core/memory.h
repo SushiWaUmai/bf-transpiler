@@ -21,3 +21,4 @@ void        bf_open_scope(bf_t *f);
 void        bf_close_scope(bf_t *f);
 
 #endif //  BF_MEMORY_H_
+

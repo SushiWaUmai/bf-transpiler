@@ -38,3 +38,4 @@ bf_ptr_t bf_stack_peek(bf_stacknode_t *root)
         return -1;
     return root->data;
 }
+

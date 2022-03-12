@@ -22,3 +22,4 @@ bf_ptr_t bf_stack_pop(bf_stacknode_t** root);
 bf_ptr_t bf_stack_peek(bf_stacknode_t* root);
 
 #endif //  STACK_H_
+

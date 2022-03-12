@@ -10,3 +10,4 @@ bf_ptr_t    bf_start_for_loop_l(bf_t *bf, bf_ptr_t iterator);
 void        bf_stop_for_loop(bf_t *bf, bf_ptr_t iterator);
 
 #endif // BF_LOOP_H_
+

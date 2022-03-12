@@ -39,3 +39,4 @@ void bf_stop_for_loop(bf_t *bf, bf_ptr_t iterator)
     bf_stop_loop(bf);
     bf_close_scope(bf);
 }
+

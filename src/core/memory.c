@@ -137,3 +137,4 @@ void bf_close_scope(bf_t *bf)
     bf_ptr_t scope_size = bf_stack_pop(&bf->stack);
     bf->stack_ptr += scope_size;
 }
+

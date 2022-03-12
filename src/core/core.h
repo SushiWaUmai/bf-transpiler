@@ -16,3 +16,4 @@ bf_t*       bf_init(FILE *output);
 void        bf_terminate(bf_t *bf);
 
 #endif // BF_CORE_H_
+

@@ -17,3 +17,4 @@ void bf_terminate(bf_t *bf)
 {
     free(bf);
 }
+
