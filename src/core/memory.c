@@ -17,26 +17,24 @@ void bf_write(bf_t *bf, bf_cell_t c, bf_ptr_t n)
 }
 
 // Shift the current pointer by a given amount
-void bf_shift_ptr(bf_t *bf, bf_ptr_t way)
+void bf_shift_ptr(bf_t *bf, bf_ptr_t way, bool dir)
 {
-    bf_cell_t dir;
-    if (way == 0)
-        return;
-    else if (way > 0)
-        dir = '>';
+    char dir_char = dir ? '>' : '<';
+    bf_write(bf, dir_char, way);
+
+    if (dir)
+        bf->current_ptr += way;
     else
-        dir = '<';
-
-    bf_write(bf, dir, abs(way));
-
-    bf->current_ptr += way;
+        bf->current_ptr -= way;
 }
 
 // Move the current pointer to a given position
 void bf_move_ptr(bf_t *bf, bf_ptr_t target_pos)
 {
-    bf_ptr_t way = target_pos - bf->current_ptr;
-    bf_shift_ptr(bf, way);
+    if(target_pos > bf->current_ptr) 
+        bf_shift_ptr(bf, target_pos - bf->current_ptr, true);
+    else
+        bf_shift_ptr(bf, bf->current_ptr - target_pos, false);
 }
 
 void bf_move_value(bf_t *bf, bf_ptr_t src, bf_ptr_t dst)
@@ -111,9 +109,9 @@ bf_ptr_t bf_allocate_stack(bf_t *bf, bf_ptr_t size)
 bf_ptr_t bf_create_buffer(bf_t *bf, bf_cell_t *str, bf_ptr_t len)
 {
     bf_ptr_t pos = bf_allocate_stack(bf, len);
-    for (bf_ptr_t i = len - 1; i >= 0; i--)
+    for (bf_ptr_t i = len; i > 0; i--)
     {
-        bf_set_value(bf, str[(int)i], pos + i);
+        bf_set_value(bf, str[(int)i - 1], pos + i - 1);
     }
     return pos;
 }
