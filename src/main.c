@@ -42,11 +42,16 @@ int main(void)
         bf_print_digit_l(bf, num_ptr_2);
         bf_print_ascii_buffer_l(bf, equal, 3);
         bf_print_digit_l(bf, result);
+
     }
     bf_close_scope(bf);
 
     bf_print_ascii_r(bf, '\n');
-    bf_print_ascii_buffer_r(bf, (bf_cell_t *)"ASCII R value Test\n", 19);
+    bf_print_ascii_buffer_r(bf, (bf_cell_t *)"ASCII R value Test", 18);
+
+    bf_print_ascii_r(bf, '\n');
+    bf_print_ascii_buffer_r(bf, (bf_cell_t *)"Lucky", 5);
+    bf_print_digit_r(bf, 7);
 
     fclose(bf_output);
     bf_terminate(bf);

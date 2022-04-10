@@ -23,7 +23,7 @@ void bf_print_ascii_r(bf_t *bf, bf_cell_t val)
 }
 
 // Print a buffer in ascii to the output stream
-// str - string to print
+// pos - buffer ptr to print 
 // len - length of the string
 void bf_print_ascii_buffer_l(bf_t *bf, bf_ptr_t pos, bf_ptr_t len)
 {
@@ -32,6 +32,9 @@ void bf_print_ascii_buffer_l(bf_t *bf, bf_ptr_t pos, bf_ptr_t len)
         bf_print_ascii_l(bf, pos + i);
 }
 
+// Print a buffer in ascii to the output stream
+// val - buffer to print
+// len - length of the string
 void bf_print_ascii_buffer_r(bf_t *bf, bf_cell_t *val, bf_ptr_t len)
 {
     bf_open_scope(bf);
@@ -49,5 +52,17 @@ void bf_print_digit_l(bf_t *bf, bf_ptr_t pos)
     bf_add_value_r(bf, '0', pos);
     bf_print_ascii_l(bf, bf->current_ptr);
     bf_sub_value_r(bf, '0', pos);
+}
+
+// Print the digit value of the value at the current pointer
+// val - value to print the digit value of
+void bf_print_digit_r(bf_t *bf, bf_cell_t val)
+{
+    bf_open_scope(bf);
+    {
+        bf_ptr_t ptr = bf_create_value(bf, val);
+        bf_print_digit_l(bf, ptr);
+    }
+    bf_close_scope(bf);
 }
 
