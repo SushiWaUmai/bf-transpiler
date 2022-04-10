@@ -1,4 +1,5 @@
 #include "bf.h"
+#include "core/print.h"
 
 int main(void)
 {
@@ -31,10 +32,10 @@ int main(void)
     bf_open_scope(bf);
     {
         bf_ptr_t num_ptr_1 = bf_create_value(bf, 6);
-        bf_ptr_t op = bf_create_buffer(bf, (bf_cell_t *)" + ", 3);
+        bf_ptr_t op = bf_create_buffer(bf, (bf_cell_t *)" - ", 3);
         bf_ptr_t num_ptr_2 = bf_create_value(bf, 3);
         bf_ptr_t equal = bf_create_buffer(bf, (bf_cell_t *)" = ", 3);
-        bf_ptr_t result = bf_add_values(bf, num_ptr_1, num_ptr_2);
+        bf_ptr_t result = bf_sub_values(bf, num_ptr_1, num_ptr_2);
 
         bf_print_digit_l(bf, num_ptr_1);
         bf_print_ascii_buffer_l(bf, op, 3);
@@ -43,6 +44,9 @@ int main(void)
         bf_print_digit_l(bf, result);
     }
     bf_close_scope(bf);
+
+    bf_print_ascii_r(bf, '\n');
+    bf_print_ascii_buffer_r(bf, (bf_cell_t *)"ASCII R value Test\n", 19);
 
     fclose(bf_output);
     bf_terminate(bf);

@@ -54,3 +54,22 @@ void bf_sub_value_r(bf_t *bf, bf_cell_t value, bf_ptr_t target)
     bf_write(bf, '-', value);
 }
 
+bf_ptr_t bf_sub_values(bf_t *bf, bf_ptr_t a, bf_ptr_t b) {
+    bf_ptr_t target = bf_allocate_stack(bf, 1);
+    bf_clear_value(bf, target);
+
+    {
+        bf_ptr_t iterator = bf_start_for_loop_l(bf, a);
+        bf_add_value_r(bf, 1, target);
+        bf_stop_for_loop(bf, iterator);
+    }
+
+    {
+        bf_ptr_t iterator = bf_start_for_loop_l(bf, b);
+        bf_sub_value_r(bf, 1, target);
+        bf_stop_for_loop(bf, iterator);
+    }
+
+    return target;
+}
+
